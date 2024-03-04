@@ -49,7 +49,7 @@ const Welcome = () => {
       
 <div >
           {isConnected? ( <Home account = {account}/> ) : ( 
-            <div className="flex w-full justify-center items-center bg-slate-950">
+            <div className="flex w-full justify-center items-center gradient-bg-services">
           
             <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-1 px-4" >
                 <div className="flex flex-1 justify-start items-start flex-col mf:mr-10 " >

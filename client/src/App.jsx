@@ -11,8 +11,8 @@ const App = () => (
       </div>
       <div className="content">
         <Routes>
-          <Route exact path="/Home" element={<Home />} />
-          <Route path="/Welcome" element={<Welcome />} />
+          <Route exact path="/" element={<Welcome />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Docs" element={<Docs />} />
           <Route path="/Wallets" element={<Wallets />} />
           <Route path="/Analysis" element={<Analysis />} />
