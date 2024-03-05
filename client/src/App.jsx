@@ -1,4 +1,4 @@
-import { Navbar, Welcome, Footer, Services, Transactions } from "./components";
+import { Navbar, Welcome, Footer, Services, Homecard} from "./components";
 import { Home, Docs, Wallets, Analysis } from "./pages";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -11,8 +11,8 @@ const App = () => (
       </div>
       <div className="content">
         <Routes>
-          <Route exact path="/Home" element={<Home />} />
-          <Route path="/Welcome" element={<Welcome />} />
+          <Route exact path="/" element={<Welcome />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/Docs" element={<Docs />} />
           <Route path="/Wallets" element={<Wallets />} />
           <Route path="/Analysis" element={<Analysis />} />

@@ -22,4 +22,7 @@ module.exports = {
          gasPrice: 200000000,
       }
    },
-}
+   etherscan: {
+      apiKey: "fwWfxO89aNrjn7eINDcNJWMAAyDpUn2J",
+    },
+};

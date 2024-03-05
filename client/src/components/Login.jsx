@@ -1,14 +1,20 @@
 import React from "react";
-
+import Homecard from "./Homecard";
 
 const Login = (props) => {
     return (
-        <div className="Login-container">
-            <h1 className="welcome-message">Welcome to Decentralized Voting application</h1>
-            <button className="login-button" onClick={props.connectWallet}> Connect Metamask
+        <div className=" gradient-bg-services">
+            <div>
+                <h1 className=" sm:text-3xl text-slate-300  py-6 "> DECENTRALIZED VOTING APPLICATION</h1>
+            
+             <button className="login-button" onClick={props.connectWallet}> Connect Metamask
 
-            </button>
-
+                </button>
+            </div>
+            <div >
+                <Homecard/>
+            </div>
+        
         </div>
     )
 }
