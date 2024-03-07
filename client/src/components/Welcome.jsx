@@ -119,6 +119,7 @@ const Welcome = () => {
   async function connectToMetamask() {
     if (window.ethereum) {
       try {
+        alert("Connect METAMASK to continue!!")
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
         await provider.send("eth_requestAccounts", []);
@@ -133,6 +134,7 @@ const Welcome = () => {
       }
     } else {
       console.error("Metamask is not detected in the browser")
+      
     }
   }
 
