@@ -19,6 +19,7 @@ const Welcome = () => {
   const [candidates, setCandidates] = useState([]);
   const [number, setNumber] = useState('');
   const [CanVote, setCanVote] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
  
 
 
@@ -53,6 +54,9 @@ const Welcome = () => {
 
 
   async function canVote() {
+    
+      setIsLoading(false);
+      <Home/>
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
@@ -119,7 +123,9 @@ const Welcome = () => {
   async function connectToMetamask() {
     if (window.ethereum) {
       try {
+        
         alert("Connect METAMASK to continue!!")
+        setIsLoading(true);
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
         await provider.send("eth_requestAccounts", []);
@@ -157,7 +163,9 @@ const Welcome = () => {
                       
                       : 
                       
-                      (<Login connectWallet = {connectToMetamask}/>)}
+                      (<Login 
+                      connectWallet = {connectToMetamask}
+                      loading = {isLoading}/>)}
       
     </div>
           
