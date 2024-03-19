@@ -51,7 +51,7 @@ const Home = (props) => {
                 </div>
             )}
             
-            <table id="myTable" className="candidates-table ">
+            <table id="myTable" className="candidates-table mt-3">
                 <thead>
                 <tr className='text-black'>
                     <th>Index</th>

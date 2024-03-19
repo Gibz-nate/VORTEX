@@ -158,7 +158,10 @@ const Welcome = () => {
                       number= {number}
                       handleNumberChange = {handleNumberChange}
                       voteFunction = {vote}
-                      showButton = {CanVote}/>) 
+                      showButton = {CanVote}
+                      />
+                      
+                      ) 
                       
                       : 
                       
@@ -167,6 +170,7 @@ const Welcome = () => {
                       loading = {isLoading}/>)}
       
     </div>
+    
           
 
     );
