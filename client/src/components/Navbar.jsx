@@ -11,8 +11,7 @@ const navigation = [
   { name: 'Dashboard', href: '/Home', current: false  },
   { name: 'Vote-Analytics', href: '/Analysis', current: false },
   { name: 'Docs', href: '/Docs', current: false },
-  { name: 'Wallets', href: '/Wallets', current: false },
-
+  { name: 'Wallets', href: '/Wallets', current: false },   
 ]
 
 function navigate() {

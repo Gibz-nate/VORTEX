@@ -24,9 +24,7 @@ const Welcome = () => {
 
 
   useEffect( () => {
-    getCandidates();
-    getRemainingTime();
-    //getCurrentStatus();
+    
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
@@ -36,7 +34,11 @@ const Welcome = () => {
         window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
       }
     }
+    
   });
+    getCandidates();
+    getRemainingTime();
+    getCurrentStatus();
 
 
   async function vote() {
@@ -106,7 +108,7 @@ const Welcome = () => {
         contractAddress, contractAbi, signer
       );
       const time = await contractInstance.getRemainingTime();
-      setremainingTime(parseInt(time, 16));
+      setremainingTime(parseInt(time)/60);
   }
 
   function handleAccountsChanged(accounts) {
