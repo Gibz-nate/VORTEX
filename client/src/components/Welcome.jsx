@@ -25,9 +25,13 @@ const Welcome = () => {
 
   useEffect( () => {
     
+    
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
+    getCandidates();
+    getRemainingTime();
+    getCurrentStatus();
 
     return() => {
       if (window.ethereum) {
@@ -35,10 +39,9 @@ const Welcome = () => {
       }
     }
     
+    
   });
-    getCandidates();
-    getRemainingTime();
-    getCurrentStatus();
+    
 
 
   async function vote() {
@@ -76,7 +79,7 @@ const Welcome = () => {
       const contractInstance = new ethers.Contract (
         contractAddress, contractAbi, signer
       );
-      const candidatesList = await contractInstance.getAllVotesOfCandidates();
+      const candidatesList = await contractInstance.getAllCandidates();
       const formattedCandidates = candidatesList.map((candidate, index) => {
         return {
           index: index,

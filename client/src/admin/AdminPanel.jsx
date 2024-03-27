@@ -36,7 +36,7 @@ function AdminPanel() {
       // Optionally, fetch transactions after creating a session
       // fetchTransactions();
     } catch (error) {
-      alert('Error creating voting session:', error);
+      alert('Error creating voting session: Unauthorized Address', error);
       console.error('Error creating voting session:', error);
     }
   }

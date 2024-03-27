@@ -1,7 +1,7 @@
 
 // after deploying contract
 
-const contractAddress = "0x3A178f66E410851f2BEa1b6b67E0D8c334EA1b23";
+const contractAddress = "0xEFEF5Db4Ca4805444b44460B7B67ec689354f4C2";
 
 const contractAbi = [
   {
@@ -160,7 +160,7 @@ const contractAbi = [
   },
   {
     "inputs": [],
-    "name": "getAllVotesOfCandidates",
+    "name": "getAllCandidates",
     "outputs": [
       {
         "components": [
