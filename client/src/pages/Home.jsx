@@ -39,7 +39,7 @@ const Home = (props) => {
             </div>
             
             
-            <p className="connected-account">Remaining Time: {props.remainingTime}</p>
+            <p className="connected-account">Remaining Time: <b className='text-orange-600'>{props.remainingTime}</b>  mins</p>
             { props.showButton ? (
                 <p className="connected-account">You have already voted</p>
             ) : (
@@ -51,7 +51,7 @@ const Home = (props) => {
                 </div>
             )}
             
-            <table id="myTable" className="candidates-table ">
+            <table id="myTable" className="candidates-table mt-3">
                 <thead>
                 <tr className='text-black'>
                     <th>Index</th>

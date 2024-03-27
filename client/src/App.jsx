@@ -1,8 +1,10 @@
 import { Navbar, Welcome, Footer, Services, Homecard} from "./components";
 import { Home, Docs, Wallets, Analysis } from "./pages";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AdminPanel } from "./admin";
 
 const App = () => (
+  
   <Router>
     <div className="min-h-screen">
       <div className="gradient-bg-welcome">
@@ -16,18 +18,14 @@ const App = () => (
           <Route path="/Docs" element={<Docs />} />
           <Route path="/Wallets" element={<Wallets />} />
           <Route path="/Analysis" element={<Analysis />} />
+          <Route path="/admin" element={< AdminPanel/>} />
         </Routes>
       </div>
       <Services /> 
+     
       <Footer />
     </div>
   </Router>
 );
 
 export default App;
-
-
-
-
-
-

@@ -24,19 +24,24 @@ const Welcome = () => {
 
 
   useEffect( () => {
-    getCandidates();
-    getRemainingTime();
-    //getCurrentStatus();
+    
+    
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', handleAccountsChanged);
     }
+    getCandidates();
+    getRemainingTime();
+    getCurrentStatus();
 
     return() => {
       if (window.ethereum) {
         window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
       }
     }
+    
+    
   });
+    
 
 
   async function vote() {
@@ -55,8 +60,7 @@ const Welcome = () => {
 
   async function canVote() {
     
-      setIsLoading(false);
-      <Home/>
+      setIsLoading(false);      
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
@@ -75,7 +79,7 @@ const Welcome = () => {
       const contractInstance = new ethers.Contract (
         contractAddress, contractAbi, signer
       );
-      const candidatesList = await contractInstance.getAllVotesOfCandiates();
+      const candidatesList = await contractInstance.getAllCandidates();
       const formattedCandidates = candidatesList.map((candidate, index) => {
         return {
           index: index,
@@ -107,7 +111,7 @@ const Welcome = () => {
         contractAddress, contractAbi, signer
       );
       const time = await contractInstance.getRemainingTime();
-      setremainingTime(parseInt(time, 16));
+      setremainingTime(parseInt(time)/60);
   }
 
   function handleAccountsChanged(accounts) {
@@ -159,7 +163,10 @@ const Welcome = () => {
                       number= {number}
                       handleNumberChange = {handleNumberChange}
                       voteFunction = {vote}
-                      showButton = {CanVote}/>) 
+                      showButton = {CanVote}
+                      />
+                      
+                      ) 
                       
                       : 
                       
@@ -168,6 +175,7 @@ const Welcome = () => {
                       loading = {isLoading}/>)}
       
     </div>
+    
           
 
     );
