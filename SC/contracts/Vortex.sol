@@ -53,6 +53,16 @@ contract Voting {
         }));
 
         emit NewVotingSession(msg.sender, _description, _candidateNames, _durationInMinutes);
+
+        // Add candidates to the candidates array
+        
+        for (uint256 i = 0; i < _candidateNames.length; i++) {
+            candidates.push(Candidate({
+                name: _candidateNames[i],
+                voteCount: 0
+            }));
+        }
+
     }
 
     function cancelVotingSession() public onlyOwner onlyActiveVotingSession {
@@ -94,7 +104,8 @@ contract Voting {
         session.isActive = false;
     }
 
-    function getAllVotesOfCandidates() public view returns (Candidate[] memory){
+    // Optionally, you can add a function to retrieve the list of candidates
+    function getAllCandidates() public view returns (Candidate[] memory) {
         return candidates;
     }
 
@@ -119,4 +130,3 @@ contract Voting {
         }
     }
 }
-

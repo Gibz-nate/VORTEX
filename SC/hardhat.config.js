@@ -23,6 +23,6 @@ module.exports = {
       }
    },
    etherscan: {
-      apiKey: "Oz5d3azbs2PapAV0E5zNyLrFRo_gFHia",
+      apiKey: "llT1PwPuMo8kp0UJlAXEzbv7J8KYKCgq",
     },
 };
