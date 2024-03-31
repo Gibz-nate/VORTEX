@@ -20,6 +20,7 @@ const Welcome = () => {
   const [number, setNumber] = useState('');
   const [CanVote, setCanVote] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [votingSessionDescription, setVotingSessionDescription] = useState('');
  
 
 
@@ -32,6 +33,7 @@ const Welcome = () => {
     getCandidates();
     getRemainingTime();
     getCurrentStatus();
+    listenToEvents();
 
     return() => {
       if (window.ethereum) {
@@ -151,6 +153,19 @@ const Welcome = () => {
   async function handleNumberChange(e) {
     setNumber(e.target.value);
   }
+
+  async function listenToEvents() {
+    if (!provider) return;
+    const contractInstance = new ethers.Contract(
+      contractAddress, contractAbi, provider
+    );
+
+    // Listen for the NewVotingSession event
+    contractInstance.on("NewVotingSession", (admin, description, candidateNames, durationInMinutes) => {
+      // When the event is emitted, update the voting session description state
+      setVotingSessionDescription(description);
+    });
+  }
  
 
 
@@ -164,6 +179,7 @@ const Welcome = () => {
                       handleNumberChange = {handleNumberChange}
                       voteFunction = {vote}
                       showButton = {CanVote}
+                      description={votingSessionDescription}
                       />
                       
                       ) 

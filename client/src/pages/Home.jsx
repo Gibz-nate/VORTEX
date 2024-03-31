@@ -39,18 +39,27 @@ const Home = (props) => {
             </div>
             
             
-            <p className="connected-account">Remaining Time: <b className='text-orange-600'>{props.remainingTime}</b>  mins</p>
-            { props.showButton ? (
+            <div>
+            <p className="connected-account">
+                {props.remainingTime === 0 ? 'Voting session expired ' : `Remaining Time: `}
+                <b className='text-orange-600'>{props.remainingTime}</b> mins
+            </p>
+            {props.showButton ? (
                 <p className="connected-account">You have already voted</p>
             ) : (
                 <div>
-                    <input className='text-black' type="number" placeholder="Entern Candidate Index" value={props.number} onChange={props.handleNumberChange}></input>
-                <br />
-                <button className="login-button" onClick={props.voteFunction}>Vote</button>
-
+                    {props.remainingTime !== 0 && (
+                        <>
+                            <input className='text-black' type="number" placeholder="Enter Candidate Index" value={props.number} onChange={props.handleNumberChange} />
+                            <br />
+                            <button className="login-button" onClick={props.voteFunction}>Vote</button>
+                        </>
+                    )}
                 </div>
             )}
-            
+            </div>
+
+            <h1>Description: <b className='text-orange-600'>{props.description}</b> </h1>
             <table id="myTable" className="candidates-table mt-3">
                 <thead>
                 <tr className='text-black'>
