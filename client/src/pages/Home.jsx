@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { shortenAddress } from '../utils/shortenAddress';
+import { useAuth} from '@clerk/clerk-react';
 
 const Home = (props) => {
+
+    
+       
     return (
         
             <div className="connected-container w-full text-white bg-slate-900 ">
                 <div className="flex flex-col flex-1 items-center justify-start w-full mf:mt-0 mt-10 bg-slate-900">
-            <h1 className="connected-header text-white">You are Connected to Metamask</h1>
+                    <h1 className=" text-3xl sm:text-5xl  text-gradient py-8 ">Welcome,  </h1>
+            <h2 className=" text-xl text-amber-600">You are Connected to Metamask</h2>
             <div className="p-3 flex justify-end items-start flex-col rounded-xl h-40 sm:w-72 w-full my-5 eth-card .white-glassmorphism ">
                 <div className="flex justify-between flex-col w-full h-full" >
                     <div className="flex justify-between items-start" >

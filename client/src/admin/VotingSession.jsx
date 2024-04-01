@@ -13,6 +13,8 @@ function VotingSession() {
   const [votingContract, setVotingContract] = useState(null);
   const [CanVote, setCanVote] = useState(true);
   const [candidates, setCandidates] = useState([]);
+  const [candidateName, setCandidateName] = useState('');
+  const [candidateIndex, setCandidateIndex] = useState('');
 
   useEffect(() => {
     initializeContract();
@@ -36,7 +38,9 @@ function VotingSession() {
       await votingContract.createVotingSession(description, candidateNames.split(','), duration);
       alert('Voting session created successfully.');
       console.log('Voting session created successfully.');
-      setCandidateNames(''); // Reset candidate names state
+      setCandidateNames('');
+      setDescription('');
+      setDuration(''); // Reset candidate names state
       setCanVote(true); // Reset voting state
       // Optionally, fetch transactions after creating a session
       // fetchTransactions();
@@ -52,7 +56,9 @@ function VotingSession() {
       await votingContract.cancelVotingSession();
       alert('Voting session cancelled successfully.');
       console.log('Voting session cancelled successfully.');
-      setCandidateNames(''); // Reset candidate names state
+      setCandidateNames('');
+      setDescription('');
+      setDuration('');// Reset candidate names state
       setCanVote(true); // Reset voting state
       // Optionally, fetch transactions after cancelling a session
       // fetchTransactions();
@@ -73,6 +79,40 @@ function VotingSession() {
     const voteStatus = await contractInstance.voters(await signer.getAddress());
     setCanVote(voteStatus);
 
+}
+
+ // Add candidate function
+ async function addCandidate() {
+  try {
+      if (votingContract && candidateName) {
+          // Call the addCandidate function on the smart contract
+          await votingContract.addCandidate(candidateName);
+          // Optionally, you can fetch updated transactions after adding a candidate
+          alert('Candidate added successfully')
+          //fetchTransactions();
+          setCandidateName('');
+      }
+  } catch (error) {
+      alert('Error adding candidate', error);
+      console.error('Error adding candidate:', error);
+  }
+}
+
+// Delete candidate function
+async function deleteCandidate() {
+  try {
+      if (votingContract) {
+          // Call the deleteCandidate function on the smart contract
+          await votingContract.deleteCandidate(candidateIndex);
+          // Optionally, you can fetch updated transactions after deleting a candidate
+          alert('Candidate deleted successfully')
+          //fetchTransactions();
+          setCandidateIndex('');
+      }
+  } catch (error) {
+      alert('Error deleting candidate: ' + error)
+      console.error('Error deleting candidate:', error);
+  }
 }
 
 async function getCandidates() {
@@ -99,7 +139,7 @@ async function getCandidates() {
   return (
     <div className="container mx-auto flex flex-row justify-between">
       {/* Side panel */}
-      <div className=" bg-gray-200 p-6 flex-grow-0">
+      <div className=" bg-gray-200 p-6 flex-grow-0 rounded-lg">
         <h1 className="text-xl font-bold mb-4">Create Voting Sessions</h1>
         {/* Form for adding multiple candidates */}
         <div className="mb-4 bg-white rounded-md shadow-md p-4">
@@ -108,14 +148,14 @@ async function getCandidates() {
           <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={candidateNames} onChange={(e) => setCandidateNames(e.target.value)} placeholder="Candidate Names (comma-separated)" />
           <input className="w-full border rounded-md px-3 py-2 mb-2" type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration (minutes)" />
 
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={createVotingSession}>Add Candidates</button>
+          <button className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" onClick={createVotingSession}>Add Candidates</button>
         </div>
 
         {/* Form for adding a single candidate */}
         <div className="mb-4 bg-white rounded-md shadow-md p-4">
           <h2 className="text-lg font-semibold mb-2">Add Single Candidate</h2>
-          <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={candidateNames} onChange={(e) => setCandidateNames(e.target.value)} placeholder="Candidate Name" />
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={createVotingSession}>Add Candidate</button>
+          <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} placeholder="Candidate Name" />
+          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={addCandidate}>Add Candidate</button>
         </div>
 
         {/* Form for deleting a candidate */}
@@ -124,15 +164,15 @@ async function getCandidates() {
           <input
             className="w-full border rounded-md px-3 py-2 mb-2"
             type="number"
-            value={candidates}
-            onChange={(e) => setCandidateNames(e.target.value)}
+            value={candidateIndex}
+            onChange={(e) => setCandidateIndex(e.target.value)}
             placeholder="Candidate Index"
           />
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onClick={cancelVotingSession}>Delete Candidate</button>
+          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" onClick={deleteCandidate}>Delete Candidate</button>
         </div>
+        <button className="w-full bg-red-600 hover:bg-red-950 text-white font-bold py-2 px-4 rounded mt-6" onClick={cancelVotingSession}>Cancel Current Voting Session</button>
       </div>
 
-      
     </div>
   );
 }
