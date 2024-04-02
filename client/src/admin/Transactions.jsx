@@ -65,6 +65,7 @@ const Transactions = () => {
               </li>
             ))}
           </ul>
+          <h1>voteStatus</h1>
         </div>
       </div>
     </div>

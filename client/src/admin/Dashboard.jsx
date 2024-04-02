@@ -16,40 +16,50 @@ const Dashboard = () => {
     const [candidates, setCandidates] = useState([]);
 
     useEffect(() => {
-        initializeContract();
-      }, []);
-    
-      // Initialize provider and contract instance
-      async function initializeContract() {
-        try {
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const contract = new ethers.Contract(contractAddress, contractAbi, provider.getSigner());
-          setVotingContract(contract);
-
-          Votes();
-          tcandidates();
-          sessions();
-          getCandidates();
-        } catch (error) {
-          console.error('Error initializing contract:', error);
+        async function fetchData() {
+            try {
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                const signer = provider.getSigner();
+                const contractInstance = new ethers.Contract(contractAddress, contractAbi, signer);
+                setVotingContract(contractInstance);
+            } catch (error) {
+                console.error('Error initializing contract:', error);
+            }
         }
-      }
+    
+        fetchData();
+    }, []);
+    
+    useEffect(() => {
+        if (votingContract) {
+            getCandidates();
+            Votes();
+            tcandidates();
+            sessions();
+        }
+    }, [votingContract]);
+    
 
-      async function getCandidates() {
+    async function getCandidates() {
         try {
             const candidatesList = await votingContract.getAllCandidates();
+    
             const formattedCandidates = candidatesList.map((candidate, index) => {
                 return {
                     index: index,
                     name: candidate.name,
                     voteCount: candidate.voteCount.toNumber()
-                }
+                };
             });
+    
             setCandidates(formattedCandidates);
         } catch (error) {
             console.error('Error fetching candidates:', error);
         }
     }
+
+    
 
       async function Votes(){
         try {
@@ -94,6 +104,7 @@ const Dashboard = () => {
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(255, 99, 132, 0.5)',
+                        'rgba(255, 206, 86, 0.5)'
                     ],
                 }],
             },
@@ -110,6 +121,7 @@ const Dashboard = () => {
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(255, 99, 132, 0.5)',
+                        'rgba(255, 206, 86, 0.5)'
                     ],
                 }],
             },
@@ -123,7 +135,10 @@ const Dashboard = () => {
                 datasets: [{
                     label: 'Vote Count',
                     data: candidates.map(candidate => candidate.voteCount), // Replace with actual vote counts
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    backgroundColor: ['rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)'
+                                      ],
                     borderWidth: 1,
                 }],
             },
@@ -152,7 +167,7 @@ const Dashboard = () => {
             barChart.destroy();
             lineChart.destroy();
         };
-    }, []);
+    }, [candidates]);
 
 
     return (

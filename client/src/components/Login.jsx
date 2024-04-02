@@ -6,7 +6,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-reac
 const Login = (props) => {
     return (
         
-        <div className=" gradient-bg-services">
+        <div className=" gradient-bg-services h-screen mt-auto">
             <SignedIn>
             <div>
                 <h1 className=" text-3xl sm:text-4xl  text-gradient py-8 "> DECENTRALIZED VOTING APPLICATION</h1>

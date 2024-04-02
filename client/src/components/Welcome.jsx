@@ -1,200 +1,27 @@
-import { AiFillPlayCircle } from "react-icons/ai";
-import { useState, useEffect } from "react"; 
-import {ethers} from "ethers";
-import { contractAbi, contractAddress } from "../utils/constants";
-import { Analysis, Home, Docs, Wallets } from "../pages"; 
-import "../App.css";
-
-
-import { Homecard, Loader, Login } from "./";
-
-
+import { Link } from 'react-router-dom';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 
 const Welcome = () => {
-  const [provider, setProvider] = useState(null);
-  const [account, setAccount] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
-  const [votingStatus, setVotingStatus] = useState(true);
-  const [remainingTime, setremainingTime] = useState('');
-  const [candidates, setCandidates] = useState([]);
-  const [number, setNumber] = useState('');
-  const [CanVote, setCanVote] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [votingSessionDescription, setVotingSessionDescription] = useState('');
- 
+  return (
+    <div className=" items-center justify-center h-auto gradient-bg-services mt-14">
+      <h1 className=' flex flex-col text-4xl sm:text-4xl  text-gradient py-8'>Powered by Ethereum ♦</h1>
+      <div className="max-w-md mx-auto  shadow-md  py-4 px-3 rounded-lg  font-semibold white-glassmorphism  hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out border-0 ">
+        <p className="text-justify text-sm text-slate-400 ">
+          Welcome to VORTEX, a decentralized blockchain-based voting system designed to provide secure and transparent voting processes. VORTEX leverages the power of blockchain technology to ensure the integrity and immutability of voting data, providing users with a trustworthy platform for conducting elections.
+        </p>
+      </div>
 
-
-  useEffect( () => {
-    
-    
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', handleAccountsChanged);
-    }
-    getCandidates();
-    getRemainingTime();
-    getCurrentStatus();
-    listenToEvents();
-
-    return() => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
-      }
-    }
-    
-    
-  });
-    
-
-
-  async function vote() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contractInstance = new ethers.Contract (
-        contractAddress, contractAbi, signer
-      );
-
-      const tx = await contractInstance.vote(number);
-      await tx.wait();
-      canVote();
-  }
-
-
-  async function canVote() {
-    
-      setIsLoading(false);      
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contractInstance = new ethers.Contract (
-        contractAddress, contractAbi, signer
-      );
-      const voteStatus = await contractInstance.voters(await signer.getAddress());
-      setCanVote(voteStatus);
-
-  }
-
-  async function getCandidates() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contractInstance = new ethers.Contract (
-        contractAddress, contractAbi, signer
-      );
-      const candidatesList = await contractInstance.getAllCandidates();
-      const formattedCandidates = candidatesList.map((candidate, index) => {
-        return {
-          index: index,
-          name: candidate.name,
-          voteCount: candidate.voteCount.toNumber()
-        }
-      });
-      setCandidates(formattedCandidates);
-  }
-
-
-  async function getCurrentStatus() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contractInstance = new ethers.Contract (
-        contractAddress, contractAbi, signer
-      );
-      const status = await contractInstance.getVotingStatus();
-      console.log(status);
-      setVotingStatus(status);
-  }
-
-  async function getRemainingTime() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      const contractInstance = new ethers.Contract (
-        contractAddress, contractAbi, signer
-      );
-      const time = await contractInstance.getRemainingTime();
-      setremainingTime(parseInt(time)/60);
-  }
-
-  function handleAccountsChanged(accounts) {
-    if (accounts.length > 0 && account !== accounts[0]) {
-      setAccount(accounts[0]);
-      canVote();
-    } else {
-      setIsConnected(false);
-      setAccount(null);
-    }
-  }
-
-  async function connectToMetamask() {
-    if (window.ethereum) {
-      try {
-        
-        alert("Connect METAMASK to continue!!")
-        setIsLoading(true);
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(provider);
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
-        const address = await signer.getAddress();
-        setAccount(address);
-        console.log("Metamask Connected : " + address);
-        setIsConnected(true);
-        canVote();
-      } catch (err) {
-        console.error(err);
-      }
-    } else {
-      console.error("Metamask is not detected in the browser")
-      
-    }
-  }
-
-  async function handleNumberChange(e) {
-    setNumber(e.target.value);
-  }
-
-  async function listenToEvents() {
-    if (!provider) return;
-    const contractInstance = new ethers.Contract(
-      contractAddress, contractAbi, provider
-    );
-
-    // Listen for the NewVotingSession event
-    contractInstance.on("NewVotingSession", (admin, description, candidateNames, durationInMinutes) => {
-      // When the event is emitted, update the voting session description state
-      setVotingSessionDescription(description);
-    });
-  }
- 
-
-
-    return (
-      <div className="App">
-      { isConnected ? (<Home 
-                      account = {account}
-                      candidates = {candidates}
-                      remainingTime = {remainingTime}
-                      number= {number}
-                      handleNumberChange = {handleNumberChange}
-                      voteFunction = {vote}
-                      showButton = {CanVote}
-                      description={votingSessionDescription}
-                      />
-                      
-                      ) 
-                      
-                      : 
-                      
-                      (<Login 
-                      connectWallet = {connectToMetamask}
-                      loading = {isLoading}/>)}
-      
+      <Link to="/home">
+        <button
+          className="px-6 py-3 rounded-lg mt-4 bg-gradient-to-r from-orange-500 to-blue-600 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out"
+        >
+          Continue to Application
+          <AiOutlineArrowRight className="ml-0" />
+        </button>
+      </Link>
     </div>
-    
-          
-
-    );
-}
+  );
+};
 
 export default Welcome;
+
