@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { contractAbi, contractAddress } from '../utils/constants';
 import {  Home } from "../pages"; 
+import { storage } from '../firebaseConfig';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import  {v4} from 'uuid';
 
 
 function VotingSession() {
@@ -15,6 +18,8 @@ function VotingSession() {
   const [candidates, setCandidates] = useState([]);
   const [candidateName, setCandidateName] = useState('');
   const [candidateIndex, setCandidateIndex] = useState('');
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageList, setImageList] = useState([])
 
   useEffect(() => {
     initializeContract();
@@ -133,6 +138,17 @@ async function getCandidates() {
   setCandidates(formattedCandidates);
 }
 
+const uploadImage = () => {
+  if (imageUpload == null) return;
+  const imageRef = ref(storage, `userImg/${imageUpload.name + v4()}`);
+  uploadBytes(imageRef, imageUpload).then((snapshot) =>{
+    getDownloadURL(snapshot.ref).then((url) => {
+      setImageList((prev) => [...prev, url]);
+    });
+    alert('Image uploaded successfully');
+    
+  });
+};
   
 
   // Implement UI using Tailwind CSS
@@ -155,6 +171,13 @@ async function getCandidates() {
         <div className="mb-4 bg-white rounded-md shadow-md p-4">
           <h2 className="text-lg font-semibold mb-2">Add Single Candidate</h2>
           <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={candidateName} onChange={(e) => setCandidateName(e.target.value)} placeholder="Candidate Name" />
+          <div className='m-3'>
+            <input type="file" onChange={(event) => {
+              setImageUpload(event.target.files[0])
+              }} />
+            <button onClick={uploadImage} className='bg-blue-300 hover:bg-blue-600 py-2 px-4 rounded-md'>Upload image</button>
+
+          </div>
           <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={addCandidate}>Add Candidate</button>
         </div>
 

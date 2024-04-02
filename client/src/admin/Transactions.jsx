@@ -7,6 +7,7 @@ const Transactions = () => {
   const [votingContract, setVotingContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [votingSessionDetails, setVotingSessionDetails] = useState([]);
+  const [candidates, setCandidates] = useState([]);
 
   useEffect(() => {
     initializeContract();
@@ -18,7 +19,8 @@ const Transactions = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const contract = new ethers.Contract(contractAddress, contractAbi, provider.getSigner());
       setVotingContract(contract);
-      fetchTransactions(); // Call fetchTransactions after setting the contract
+      fetchTransactions();
+      getCandidates(); // Call fetchTransactions after setting the contract
     } catch (error) {
       console.error('Error initializing contract:', error);
     }
@@ -44,13 +46,29 @@ const Transactions = () => {
       console.error('Error fetching transactions:', error);
     }
   }
-  
+  async function getCandidates() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = provider.getSigner();
+    const contractInstance = new ethers.Contract (
+      contractAddress, contractAbi, signer
+    );
+    const candidatesList = await contractInstance.getAllCandidates();
+    const formattedCandidates = candidatesList.map((candidate, index) => {
+      return {
+        index: index,
+        name: candidate.name,
+        voteCount: candidate.voteCount.toNumber()
+      }
+    });
+    setCandidates(formattedCandidates);
+}
 
   return (
     <div>
       <h1 className='text-justify text-2xl font-bold'>Transactions</h1>
       {/* Main content */}
-      <div className="bg-gray-300 p-6 rounded-lg">
+      <div className="bg-gray-400 p-6 rounded-lg">
         {/* Display voting session details */}
         <div className="mb-4">
           <h2 className="text-lg font-semibold mb-2">Voting Session Transactions</h2>
@@ -66,6 +84,24 @@ const Transactions = () => {
             ))}
           </ul>
           <h1>voteStatus</h1>
+          <table id="myTable" className="candidates-table mt-3 w-full border-2 rounded-md bg-cyan-500 ">
+                        <thead>
+                            <tr className='text-black'>
+                                <th>Index</th>
+                                <th>Candidate name</th>
+                                <th>Candidate votes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {candidates.map((candidate, index) => (
+                                <tr key={index}>
+                                    <td>{candidate.index}</td>
+                                    <td>{candidate.name}</td>
+                                    <td>{candidate.voteCount}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+              </table>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 
 // after deploying contract
 
-const contractAddress = "0xFf03d4e99d607fB291Fd7EBFd5403D5166308451";
+const contractAddress = "0x795B0394462Ab887BaF24B88Acee4b8DB0Fe0674";
 
 const contractAbi = [
   {
@@ -347,6 +347,19 @@ const contractAbi = [
   },
   {
     "inputs": [],
+    "name": "getWinners",
+    "outputs": [
+      {
+        "internalType": "string[]",
+        "name": "",
+        "type": "string[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "owner",
     "outputs": [
       {
@@ -385,6 +398,25 @@ const contractAbi = [
         "internalType": "bool",
         "name": "",
         "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "votersList",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",

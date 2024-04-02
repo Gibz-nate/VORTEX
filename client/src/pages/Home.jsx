@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
 import { shortenAddress } from '../utils/shortenAddress';
@@ -7,6 +7,9 @@ import "../App.css";
 import {ethers} from "ethers";
 import { contractAbi, contractAddress } from "../utils/constants";
 import { Homecard, Loader, Login } from "../components";
+import { getDownloadURL, listAll, ref } from 'firebase/storage';
+import { storage } from '../firebaseConfig';
+import Chart from 'chart.js/auto';
 
 
 const Home = () => {
@@ -20,7 +23,9 @@ const Home = () => {
   const [CanVote, setCanVote] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [votingSessionDescription, setVotingSessionDescription] = useState('');
- 
+  const [imageList, setImageList] = useState([])
+  const imageListRef = ref(storage, "userImg/")
+  
 
 
   useEffect( () => {
@@ -166,12 +171,25 @@ const Home = () => {
     });
   }
 
+  useEffect(() => {
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+
+        });
+      });
+    });
+  },[]);
+
+ 
+
     return (
 
-        <div className="h-screen mt-64">
+        <>
 
         { isConnected ?(
-
+ <div className="h-screen mt-64">
             <div className="connected-container w-full text-white bg-slate-900">
             <div className="flex flex-col flex-1 items-center justify-start w-full  bg-slate-900">
                 <h1 className="text-3xl sm:text-5xl text-gradient py-8">Welcome, </h1>
@@ -196,6 +214,7 @@ const Home = () => {
                     </div>
                 </div>
 
+               
                 {/* Card for Candidates */}
                 <div className="py-5 flex justify-start items-center flex-col rounded-xl w-3/4 my-5 bg-sky-900 ">
                     <h3 className="text-lg text-white font-semibold mb-2">Candidates</h3>
@@ -203,10 +222,14 @@ const Home = () => {
                         {/* Map through candidate images */}
                         {candidates.map((candidate, index) => (
                             <div key={index} className="flex flex-col items-center justify-center m-7">
-                                <img src="" alt="" className="w-24 h-24 rounded-full" />
+                             
                                 <p className="text-sm text-white">{candidate.name}</p>
                             </div>
                         ))}
+                        {/* {imageList.map((url) => {
+                                return <img src={url} alt="img" className="w-24 h-24 rounded-full" />
+                              })} */}
+                         
                     </div>
                 </div>
 
@@ -261,7 +284,7 @@ const Home = () => {
                 </div>
             </div>
         </div>
-
+</div>
 
         ) : (
             <Login 
@@ -269,7 +292,7 @@ const Home = () => {
             loading = {isLoading}/>
         )}
 
-</div>
+</>
         
     );
 }

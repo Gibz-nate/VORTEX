@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaHome, FaVoteYea, FaCog, FaUserCircle, FaMoneyCheck, FaExclamationTriangle  } from 'react-icons/fa';
-import { Dashboard, Transactions, VotingSession } from './';
+import { Dashboard, Transactions, VotingSession, Settings } from './';
 import { MdMenu } from 'react-icons/md';
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import logo from "../../images/logo.png";
@@ -52,7 +52,7 @@ function App() {
           </li>
           <li
             className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
-            onClick={() => setCurrentPage('settings')}
+            onClick={() => setCurrentPage('Settings')}
           >
             <FaCog className="w-6 h-6 mr-4" />
             <span className="inline-block">Settings</span>
@@ -92,6 +92,7 @@ function App() {
         {currentPage === 'dashboard' && <Dashboard />}
         {currentPage === 'votingSession' && <VotingSession />}
         {currentPage === 'Transactions' && <Transactions />}
+        {currentPage === 'Settings' && <Settings />}
       </div>
     </div>
   );
