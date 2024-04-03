@@ -2,7 +2,7 @@
 const companyCommonStyles = "min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white";
 const Homecard = () => {
     return (
-        <div className="flex w-full justify-center items-center gradient-bg-services">
+        <div className="flex w-full justify-center items-center gradient-bg-services transition duration-300 ease-in-out cursor-pointer">
           
             <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-1 px-4" >
                 <div className="flex">

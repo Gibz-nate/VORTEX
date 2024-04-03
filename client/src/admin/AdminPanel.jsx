@@ -1,101 +1,101 @@
-// AdminPanel.js
-import React, { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
-import { contractAbi, contractAddress } from '../utils/constants';
+import React, { useState } from 'react';
+import { FaHome, FaVoteYea, FaCog, FaUserCircle, FaMoneyCheck, FaExclamationTriangle  } from 'react-icons/fa';
+import { Dashboard, Transactions, VotingSession, Settings } from './';
+import { MdMenu } from 'react-icons/md';
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import logo from "../../images/logo.png";
+import { Link } from "react-router-dom";
+function App() {
+  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [showSidebar, setShowSidebar] = useState(false);
 
-function AdminPanel() {
-  const [description, setDescription] = useState('');
-  const [candidateNames, setCandidateNames] = useState('');
-  const [duration, setDuration] = useState('');
-  const [provider, setProvider] = useState(null);
-  const [votingContract, setVotingContract] = useState(null);
-  const [transactions, setTransactions] = useState([]);
+  const toggleSidebar = () => {
+    setShowSidebar(!showSidebar);
+  };
 
-  useEffect(() => {
-    initializeContract();
-  }, []);
-
-  // Initialize provider and contract instance
-  async function initializeContract() {
-    try {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const contract = new ethers.Contract(contractAddress, contractAbi, provider.getSigner());
-      setProvider(provider);
-      setVotingContract(contract);
-    } catch (error) {
-      console.error('Error initializing contract:', error);
-    }
-  }
-
-  // Create a new voting session
-  async function createVotingSession() {
-    try {
-      await votingContract.createVotingSession(description, candidateNames.split(','), duration);
-      alert('Voting session created successfully.');
-      console.log('Voting session created successfully.');
-      // Optionally, fetch transactions after creating a session
-      // fetchTransactions();
-    } catch (error) {
-      alert('Error creating voting session: Unauthorized Address', error);
-      console.error('Error creating voting session:', error);
-    }
-  }
-
-  // Cancel a voting session
-  async function cancelVotingSession() {
-    try {
-      await votingContract.cancelVotingSession();
-      alert('Voting session cancelled successfully.');
-      console.log('Voting session cancelled successfully.');
-      // Optionally, fetch transactions after cancelling a session
-      // fetchTransactions();
-    } catch (error) {
-      alert('Error cancelling voting session:', error);
-      console.error('Error cancelling voting session:', error);
-    }
-  }
-
-  // Fetch transactions
-  async function fetchTransactions() {
-    try {
-      // Implement fetching transactions from events VoteCasted, VotingSessionEnded, and VotingSessionCancelled
-      // const fetchedTransactions = await votingContract.fetchTransactions();
-      // setTransactions(fetchedTransactions);
-    } catch (error) {
-      console.error('Error fetching transactions:', error);
-    }
-  }
-
-  // Implement UI using Tailwind CSS
   return (
     <div className="container mx-auto flex flex-row">
+      {/* Menu button */}
+      
+
       {/* Side panel */}
-      <div className="w-1/4 bg-gray-200 p-6">
-        <h1 className="text-xl font-bold mb-4">Admin Panel</h1>
-        <div className="mb-4">
-          <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" />
-          <input className="w-full border rounded-md px-3 py-2 mb-2" type="text" value={candidateNames} onChange={(e) => setCandidateNames(e.target.value)} placeholder="Candidate Names (comma-separated)" />
-          <input className="w-full border rounded-md px-3 py-2 mb-2" type="number" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder="Duration (minutes)" />
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={createVotingSession}>Create Voting Session</button>
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-2" onClick={cancelVotingSession}>Cancel Voting Session</button>
-          <button className="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded mt-2" onClick={fetchTransactions}>Fetch Transactions</button>
+      <div className="w-64 bg-gray-800 text-white fixed top-0 left-0 bottom-0 z-40 rounded-lg">
+      <div className="flex flex-col items-center h-16 px-4">
+          <div className="mb-2">
+            <Link to="/">
+             <img src={logo} alt="logo" className="w-32 pr-5 cursor-pointer" />
+            </Link>
+          </div>
+          <h1 className="text-2xl font-bold">Admin Panel</h1>
         </div>
+        <ul className="flex flex-col  justify-center text-xl py-4 space-y-4">
+          <li
+            className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
+            onClick={() => setCurrentPage('dashboard')}
+          >
+            <FaHome className="w-6 h-6 mr-4" />
+            <span className="inline-block">Dashboard</span>
+          </li>
+          <li
+            className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
+            onClick={() => setCurrentPage('votingSession')}
+          >
+            <FaVoteYea className="w-6 h-6 mr-4" />
+            <span className="inline-block">Voting Sessions</span>
+          </li>
+          <li
+            className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
+            onClick={() => setCurrentPage('Transactions')}
+          >
+            <FaMoneyCheck  className="w-6 h-6 mr-4" />
+            <span className="inline-block">Transactions</span>
+          </li>
+          <li
+            className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
+            onClick={() => setCurrentPage('Settings')}
+          >
+            <FaCog className="w-6 h-6 mr-4" />
+            <span className="inline-block">Settings</span>
+          </li>
+          <li
+            className="cursor-pointer hover:bg-gray-700 rounded-lg p-4 flex items-center"
+          >
+            <div className="w-6 h-8 mr-4">
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+               <SignedIn >
+                  <UserButton />
+                </SignedIn>
+            </div>
+            <span className="inline-block">Profile</span>
+          </li>
+        </ul>
+        {/*  Warning Card */}
+              <div className="flex-grow bg-gradient-to-br bg-neutral-800 rounded-lg shadow-lg p-2 pr-5 hover:bg-neutral-950">
+                  <div className="flex items-center justify-center mb-4">
+                      <FaExclamationTriangle className="text-orange-500 text-2xl mr-3" />
+                      <h2 className="text-2xl font-bold text-teal-800"></h2>
+                  </div>
+                  <p className="text-orange-700 text-sm font-medium text-justify">
+                      The application may experience delays while retrieving data from the blockchain, Refresh the page if necessary.
+                  </p>
+              </div>
+              <p class="inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-200 to-orange-200  ">gibsonate123@gmail.com</p>
+
+
+
       </div>
+
       {/* Main content */}
-      <div className="w-3/4 bg-gray-300 p-6">
-        {/* Display voting session details, transactions, etc. */}
-        {/* Example of displaying transactions */}
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">Transactions</h2>
-          <ul>
-            {transactions.map((transaction, index) => (
-              <li key={index} className="mb-1">{transaction}</li>
-            ))}
-          </ul>
-        </div>
+      <div className="w-full ml-64 p-4 overflow-y-auto">
+        {currentPage === 'dashboard' && <Dashboard />}
+        {currentPage === 'votingSession' && <VotingSession />}
+        {currentPage === 'Transactions' && <Transactions />}
+        {currentPage === 'Settings' && <Settings />}
       </div>
     </div>
   );
 }
 
-export default AdminPanel;
+export default App;

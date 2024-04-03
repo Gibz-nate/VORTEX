@@ -1,16 +1,14 @@
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { Navbar, Welcome, Footer, Services, Homecard} from "./components";
 import { Home, Docs, Wallets, Analysis } from "./pages";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AdminPanel } from "./admin";
 
-const App = () => (
-  
-  <Router>
+const UserLayout = () => {
+  const location = useLocation();
+
+  return (
     <div className="min-h-screen">
-      <div className="gradient-bg-welcome">
-        <Navbar />   
-        
-      </div>
+      <Navbar /> 
       <div className="content">
         <Routes>
           <Route exact path="/" element={<Welcome />} />
@@ -18,13 +16,28 @@ const App = () => (
           <Route path="/Docs" element={<Docs />} />
           <Route path="/Wallets" element={<Wallets />} />
           <Route path="/Analysis" element={<Analysis />} />
-          <Route path="/admin" element={< AdminPanel/>} />
         </Routes>
       </div>
-      <Services /> 
-     
-      <Footer />
+      {location.pathname === "/" && <Services />}
+      {location.pathname === "/" && <Footer />}
     </div>
+  );
+};
+
+const AdminLayout = () => (
+  <div>
+    <Routes>
+      <Route path="/" element={<AdminPanel />} />
+    </Routes>
+  </div>
+);
+
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/admin/*" element={<AdminLayout />} />
+      <Route path="/*" element={<UserLayout />} />
+    </Routes>
   </Router>
 );
 

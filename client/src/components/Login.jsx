@@ -6,10 +6,10 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-reac
 const Login = (props) => {
     return (
         
-        <div className=" gradient-bg-services">
+        <div className=" gradient-bg-services h-screen mt-14">
             <SignedIn>
             <div>
-                <h1 className=" sm:text-3xl text-slate-300  py-6 "> DECENTRALIZED VOTING APPLICATION</h1>
+                <h1 className=" text-3xl sm:text-4xl  text-gradient py-8 "> DECENTRALIZED VOTING APPLICATION</h1>
 
                 {props.loading ? (
                     <Loader/>

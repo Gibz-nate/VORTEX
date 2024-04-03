@@ -8,7 +8,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-reac
 
 const navigation = [
   
-  { name: 'Dashboard', href: '/Home', current: false  },
+  { name: 'Home', href: '/Home', current: false  },
   { name: 'Vote-Analytics', href: '/Analysis', current: false },
   { name: 'Docs', href: '/Docs', current: false },
   { name: 'Wallets', href: '/Wallets', current: false },   
@@ -41,7 +41,7 @@ function classNames(...classes) {
 export default function Example() {
   return (
     
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-800  w-full fixed top-0 left-0 z-50 ">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
