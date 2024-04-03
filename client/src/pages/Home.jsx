@@ -12,6 +12,7 @@ import { storage } from '../firebaseConfig';
 import Chart from 'chart.js/auto';
 
 
+
 const Home = () => {
   const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState(null);
@@ -25,6 +26,7 @@ const Home = () => {
   const [votingSessionDescription, setVotingSessionDescription] = useState('');
   const [imageList, setImageList] = useState([])
   const imageListRef = ref(storage, "userImg/")
+  const [winners, setWinners] = useState([]);
   
 
 
@@ -38,6 +40,7 @@ const Home = () => {
     getRemainingTime();
     getCurrentStatus();
     listenToEvents();
+    
 
     return() => {
       if (window.ethereum) {
@@ -182,6 +185,22 @@ const Home = () => {
     });
   },[]);
 
+  // const announceWinner = async () => {
+  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
+  //     await provider.send("eth_requestAccounts", []);
+  //     const signer = provider.getSigner();
+  //     const contractInstance = new ethers.Contract (
+  //       contractAddress, contractAbi, signer
+  //     );
+  //   try {
+  //     // Call the function in your smart contract to determine the winner(s)
+  //     const winnerNames = await contractInstance.methods.getWinners().call();
+  //     setWinners(winnerNames);
+  //   } catch (error) {
+  //     console.error('Error announcing winners:', error);
+  //   }
+  // };
+
  
 
     return (
@@ -240,6 +259,31 @@ const Home = () => {
                     </p>
                     
                 </div>
+
+
+                {/* <div className="App">
+                  <header className="App-header">
+                    <h1>Voting DApp</h1>
+                    <button onClick={announceWinner}>Announce Winner</button>
+                    <div>
+                      {winners.length > 1 ? (
+                        <div>
+                          <p>It's a tie!</p>
+                          <p>Winners:</p>
+                          <ul>
+                            {winners.map((winner, index) => (
+                              <li key={index}>{winner}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : winners.length === 1 ? (
+                        <p>The winner is: {winners[0]}</p>
+                      ) : (
+                        <p>No winner announced yet.</p>
+                      )}
+                    </div>
+                  </header>
+                </div> */}
 
                 
 

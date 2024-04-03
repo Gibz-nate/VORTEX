@@ -8,6 +8,7 @@ const Transactions = () => {
   const [provider, setProvider] = useState(null);
   const [votingSessionDetails, setVotingSessionDetails] = useState([]);
   const [candidates, setCandidates] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     initializeContract();
@@ -67,6 +68,14 @@ const Transactions = () => {
   return (
     <div>
       <h1 className='text-justify text-2xl font-bold'>Transactions</h1>
+      {/* Search bar */}
+      <input
+        type="text"
+        placeholder="Search candidate name..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-full px-4 py-2 my-4 border-2 rounded-md focus:outline-none focus:border-blue-500"
+      />
       {/* Main content */}
       <div className="bg-gray-400 p-6 rounded-lg">
         {/* Display voting session details */}
@@ -84,24 +93,24 @@ const Transactions = () => {
             ))}
           </ul>
           <h1>voteStatus</h1>
-          <table id="myTable" className="candidates-table mt-3 w-full border-2 rounded-md bg-cyan-500 ">
-                        <thead>
-                            <tr className='text-black'>
-                                <th>Index</th>
-                                <th>Candidate name</th>
-                                <th>Candidate votes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {candidates.map((candidate, index) => (
-                                <tr key={index}>
-                                    <td>{candidate.index}</td>
-                                    <td>{candidate.name}</td>
-                                    <td>{candidate.voteCount}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-              </table>
+          <table id="myTable" className="candidates-table mt-3 w-full border-2 rounded-md bg-cyan-500">
+            <thead>
+              <tr className='text-black'>
+                <th>Index</th>
+                <th>Candidate name</th>
+                <th>Candidate votes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {candidates.filter(candidate => candidate.name.toLowerCase().includes(searchTerm.toLowerCase())).map((candidate, index) => (
+                <tr key={index}>
+                  <td>{candidate.index}</td>
+                  <td>{candidate.name}</td>
+                  <td>{candidate.voteCount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
