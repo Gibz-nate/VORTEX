@@ -6,10 +6,11 @@ import { useAuth } from '@clerk/clerk-react';
 import "../App.css";
 import {ethers} from "ethers";
 import { contractAbi, contractAddress } from "../utils/constants";
-import { Homecard, Loader, Login } from "../components";
+import { Homecard,  Login } from "../components";
 import { getDownloadURL, listAll, ref } from 'firebase/storage';
 import { storage } from '../firebaseConfig';
 import Chart from 'chart.js/auto';
+import Loader from "./Loader";
 
 
 
@@ -54,6 +55,7 @@ const Home = () => {
 
 
   async function vote() {
+      setIsLoading(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       await provider.send("eth_requestAccounts", []);
       const signer = provider.getSigner();
@@ -318,7 +320,10 @@ const Home = () => {
                                 <>
                                     <input className='text-black' type="number" placeholder="Enter Candidate Index" value={number} onChange={handleNumberChange} />
                                     <br />
-                                    <button className="px-6 py-1 ml-2 mb-2  rounded-lg  bg-gradient-to-r from-orange-500 to-blue-600 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-200 ease-in-out " onClick={vote}>Vote</button>
+                                    { isLoading ? (<Loader/>):(
+                                      <button className="px-6 py-1 ml-2 mb-2  rounded-lg  bg-gradient-to-r from-orange-500 to-blue-600 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-200 ease-in-out " onClick={vote}>Vote</button>
+                                    )}
+                                    
                                 </>
                             )}
                         </div>

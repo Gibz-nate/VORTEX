@@ -6,6 +6,7 @@ import {  Home } from "../pages";
 import { storage } from '../firebaseConfig';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import  {v4} from 'uuid';
+import { FaExclamationTriangle  } from 'react-icons/fa';
 
 
 function VotingSession() {
@@ -157,6 +158,10 @@ const uploadImage = () => {
       {/* Side panel */}
       <div className=" bg-gray-200 p-6 flex-grow-0 rounded-lg">
         <h1 className="text-xl font-bold mb-4">Create Voting Sessions</h1>
+        <p className="text-red-600  bg-orange-300 text-semibold font-medium text-justify mb-2 p-5 rounded-md flex ">
+        <FaExclamationTriangle className="text-orange-500 text-2xl mr-3 " />
+        Admin METAMASK ADDRESS is required to perform actions on this page.
+                  </p>
         {/* Form for adding multiple candidates */}
         <div className="mb-4 bg-white rounded-md shadow-md p-4">
           <h2 className="text-lg font-semibold mb-2">Add Multiple Candidates</h2>

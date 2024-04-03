@@ -3,6 +3,8 @@ import { FaUsers, FaVoteYea, FaUserAlt, FaHome, FaHourglassHalf } from 'react-ic
 import Chart from 'chart.js/auto';
 import { ethers } from 'ethers';
 import { contractAbi, contractAddress } from '../utils/constants';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const Dashboard = () => {
     const donutChartRef = useRef(null);
@@ -104,7 +106,8 @@ const Dashboard = () => {
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(255, 99, 132, 0.5)',
-                        'rgba(255, 206, 86, 0.5)'
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(144, 238, 144, 1)'
                     ],
                 }],
             },
@@ -121,7 +124,8 @@ const Dashboard = () => {
                     backgroundColor: [
                         'rgba(75, 192, 192, 0.5)',
                         'rgba(255, 99, 132, 0.5)',
-                        'rgba(255, 206, 86, 0.5)'
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(144, 238, 144, 1)'
                     ],
                 }],
             },
@@ -135,9 +139,10 @@ const Dashboard = () => {
                 datasets: [{
                     label: 'Vote Count',
                     data: candidates.map(candidate => candidate.voteCount), // Replace with actual vote counts
-                    backgroundColor: ['rgba(54, 162, 235, 0.5)',
-                                    'rgba(255, 99, 132, 0.5)',
-                                    'rgba(255, 206, 86, 0.5)'
+                    backgroundColor: ['rgba(75, 192, 192, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(144, 238, 144, 1)'
                                       ],
                     borderWidth: 1,
                 }],
@@ -168,6 +173,17 @@ const Dashboard = () => {
             lineChart.destroy();
         };
     }, [candidates]);
+
+    const handlePrint = () => {
+        const input = document.getElementById('charts');
+        html2canvas(input)
+          .then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'PNG', 0, 0);
+            pdf.save('charts.pdf');
+          });
+      };
 
 
     return (
@@ -208,7 +224,7 @@ const Dashboard = () => {
                 </div>
             </div>
             {/* Analytics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+            <div id='charts' className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                 {/* Donut Chart */}
                 <div className="bg-neutral-100 rounded-lg shadow-lg p-6">
                     <h2 className="text-xl font-bold mb-4">Donut Pie Chart</h2>
@@ -233,6 +249,9 @@ const Dashboard = () => {
                     <canvas ref={lineChartRef} />
                 </div>
             </div>
+            {/* Print button */}
+        {/* <button onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-3">Print PDF</button> */}
+
         </div>
     );
 }

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { contractAbi, contractAddress } from '../utils/constants';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -9,6 +12,7 @@ const Transactions = () => {
   const [votingSessionDetails, setVotingSessionDetails] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  
 
   useEffect(() => {
     initializeContract();
@@ -65,6 +69,17 @@ const Transactions = () => {
     setCandidates(formattedCandidates);
 }
 
+const handlePrint = () => {
+  const input = document.getElementById('myTable');
+  html2canvas(input)
+    .then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('table.pdf');
+    });
+};
+
   return (
     <div>
       <h1 className='text-justify text-2xl font-bold'>Transactions</h1>
@@ -112,6 +127,8 @@ const Transactions = () => {
             </tbody>
           </table>
         </div>
+        {/* Print button */}
+        <button onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">Print PDF</button>
       </div>
     </div>
   );

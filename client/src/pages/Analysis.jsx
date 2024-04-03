@@ -42,11 +42,10 @@ const Analysis = () => {
                 datasets: [{
                     data: candidates.map(candidate => candidate.voteCount),
                     backgroundColor: [
-                        'rgba(0, 0, 139, 1)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'RGBA(255, 140, 0, 1)',
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(255, 165, 5, 1)'
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(144, 238, 144, 1)'
                         // Add more colors as needed
                     ],
                     borderColor: 'transparent',
@@ -71,11 +70,10 @@ const Analysis = () => {
                 datasets: [{
                     data: candidates.map(candidate => candidate.voteCount),
                     backgroundColor: [
-                        'rgba(0, 0, 139, 1)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'RGBA(255, 140, 0, 1)',
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(255, 165, 5, 1)'
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(144, 238, 144, 1)'
                         // Add more colors as needed
                     ],
                     borderColor: 'transparent',
@@ -159,7 +157,7 @@ const Analysis = () => {
     }, [candidates]); // Depend on candidates
 
     return (
-        <div className='bg-gray-400 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3 mt-8'>
+        <div className='bg-gray-400 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3 mt-8 '>
             <h1 className='text-justify text-2xl col-span-2'>Analysis</h1>
             {/* Bar Chart */}
             <div className="bg-neutral-100 rounded-lg shadow-lg p-4 sm:p-6 sm:w-3/4 mx-14">
