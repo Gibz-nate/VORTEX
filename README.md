@@ -12,6 +12,7 @@ Welcome to VORTEX, a decentralized blockchain-based voting system designed to pr
 - **Sepolia Test Network:** The network where the VORTEX blockchain application is deployed for testing purposes.
 - **Clerk Authentication:** Provides secure authentication mechanisms for users interacting with the voting system.
 - **ALCHEMY:** Infrastructure provider for Ethereum applications.
+- **FIREBASE:** Provides cloud storage for image uploads
 
 ## Features 🌟
 - **User Interface:**  VORTEX offers a simple and intuitive user interface where users can input the index number of a candidate and cast their votes securely.
