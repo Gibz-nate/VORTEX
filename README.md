@@ -1,4 +1,5 @@
 # VORTEX: Blockchain Voting System 🗳️
+``` Star ⭐ the repo and leave a follow 🤝 ```
 
 Welcome to VORTEX, a decentralized blockchain-based voting system designed to provide secure and transparent voting processes. VORTEX leverages the power of blockchain technology to ensure the integrity and immutability of voting data, providing users with a trustworthy platform for conducting elections.
 
@@ -46,9 +47,9 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 
 ---
-``` Star ⭐ the repo and leave a follow 🤝 ```
+
 🔗 DM me at:
-- Discord :[JohnDoe#1234](https://discord.com/users/gibz_66126)
+- Discord :[gibz_66126](https://discord.com/users/gibz_66126)
 
 
 🚀 Happy Voting with VORTEX! 🌪️
