@@ -44,7 +44,7 @@ Welcome to VORTEX, a decentralized blockchain-based voting system designed to pr
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ## License
-This project is proprietary.
+Proprietary.
 
 ---
 
