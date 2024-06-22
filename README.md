@@ -48,8 +48,11 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 
 ---
 
-🔗 DM me at:
-- Discord :[gibz_66126](https://discord.com/users/gibz_66126)
+🔗 DM me at: Discord  <img src="https://img.icons8.com/color/48/000000/discord-logo.png" width="20"/> [gibz_66126](https://discord.com/users/gibz_66126)
+
+   
+  
+   
 
 
-🚀 Happy Voting with VORTEX! 🌪️
+🚀 Voting with VORTEX! 🌪️
