@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { contractAbi, contractAddress } from '../utils/constants';
 import {  Home } from "../pages"; 
-import { storage } from '../firebaseConfig';
-import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+// import { storage } from '../firebaseConfig';
+// import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import  {v4} from 'uuid';
 import { FaExclamationTriangle  } from 'react-icons/fa';
 
@@ -139,17 +139,17 @@ async function getCandidates() {
   setCandidates(formattedCandidates);
 }
 
-const uploadImage = () => {
-  if (imageUpload == null) return;
-  const imageRef = ref(storage, `userImg/${imageUpload.name + v4()}`);
-  uploadBytes(imageRef, imageUpload).then((snapshot) =>{
-    getDownloadURL(snapshot.ref).then((url) => {
-      setImageList((prev) => [...prev, url]);
-    });
-    alert('Image uploaded successfully');
+// const uploadImage = () => {
+//   if (imageUpload == null) return;
+//   const imageRef = ref(storage, `userImg/${imageUpload.name + v4()}`);
+//   uploadBytes(imageRef, imageUpload).then((snapshot) =>{
+//     getDownloadURL(snapshot.ref).then((url) => {
+//       setImageList((prev) => [...prev, url]);
+//     });
+//     alert('Image uploaded successfully');
     
-  });
-};
+//   });
+// };
   
 
   // Implement UI using Tailwind CSS
@@ -180,7 +180,7 @@ const uploadImage = () => {
             <input type="file" onChange={(event) => {
               setImageUpload(event.target.files[0])
               }} />
-            <button onClick={uploadImage} className='bg-blue-300 hover:bg-blue-600 py-2 px-4 rounded-md'>Upload image</button>
+            {/* <button onClick={uploadImage} className='bg-blue-300 hover:bg-blue-600 py-2 px-4 rounded-md'>Upload image</button> */}
 
           </div>
           <button className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" onClick={addCandidate}>Add Candidate</button>

@@ -7,8 +7,8 @@ import "../App.css";
 import {ethers} from "ethers";
 import { contractAbi, contractAddress } from "../utils/constants";
 import { Homecard,  Login } from "../components";
-import { getDownloadURL, listAll, ref } from 'firebase/storage';
-import { storage } from '../firebaseConfig';
+// import { getDownloadURL, listAll, ref } from 'firebase/storage';
+// import { storage } from '../firebaseConfig';
 import Chart from 'chart.js/auto';
 import Loader from "./Loader";
 
@@ -26,7 +26,7 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [votingSessionDescription, setVotingSessionDescription] = useState('');
   const [imageList, setImageList] = useState([])
-  const imageListRef = ref(storage, "userImg/")
+  // const imageListRef = ref(storage, "userImg/")
   const [winners, setWinners] = useState([]);
   
 
@@ -176,16 +176,16 @@ const Home = () => {
     });
   }
 
-  useEffect(() => {
-    listAll(imageListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageList((prev) => [...prev, url]);
+  // useEffect(() => {
+  //   listAll(imageListRef).then((response) => {
+  //     response.items.forEach((item) => {
+  //       getDownloadURL(item).then((url) => {
+  //         setImageList((prev) => [...prev, url]);
 
-        });
-      });
-    });
-  },[]);
+  //       });
+  //     });
+  //   });
+  // },[]);
 
   // const announceWinner = async () => {
   //     const provider = new ethers.providers.Web3Provider(window.ethereum);
