@@ -36,20 +36,19 @@ Welcome to VORTEX, a decentralized blockchain-based voting system designed to pr
 ## Usage
 1. Access the application through your web browser.
 2. Authenticate using the Clerk Authentication system.
-3. Cast your vote by inputting the index number of your preferred candidate.
-4. View voting analytics to monitor voting trends and results.
+3. Cast your vote by using the index number of the preferred candidate.
+4. View voting analytics to monitor voting analysis and results.
 5. Administrators can access the admin page to manage voting sessions and view the dashboard.
 
 ## Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## License
-Proprietary.
+
 
 ---
+``` Star ⭐ the repo and leave a follow 🤝 ```
+🔗 DM me at:
+- Discord :[JohnDoe#1234](https://discord.com/users/gibz_66126)
 
-🔗 Connect with us:
-- Website: [www.vortexvoting.com](https://www.vortexvoting.com)
-- Email: contact@vortexvoting.com
 
 🚀 Happy Voting with VORTEX! 🌪️
