@@ -187,7 +187,7 @@ contract Voting {
         session.isActive = false;
     }
 
-    // Optionally, you can add a function to retrieve the list of candidates
+    
     function getAllCandidates() public view returns (Candidate[] memory) {
         return candidates;
     }
