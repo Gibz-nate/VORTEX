@@ -1,7 +1,7 @@
-# VORTEX: Blockchain Voting System 🗳️
+# VORTEX: Blockchain Voting D_App 🗳️
 ``` Star ⭐ the repo and leave a follow 🤝 ```
 
-VORTEX is a simple decentralized blockchain-based voting system designed to provide secure and transparent voting processes. VORTEX leverages the power of blockchain technology to ensure the integrity and immutability of voting data.
+VORTEX is a simple decentralized blockchain-based voting app designed to provide secure and transparent voting processes. VORTEX leverages the power of blockchain technology to ensure the integrity and immutability of voting data.
 
 ## Technologies Used 🛠️
 - **Metamask:** Allows users to interact with the Ethereum blockchain securely through a browser extension.
